@@ -13,7 +13,7 @@ const App = () => {
   });
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/layout/getEmailLayout")
+    axios.get("https://emailbuilder.onrender.com/api/layout/getEmailLayout")
       .then((response) => {
         setEmailLayout(response.data);
       })

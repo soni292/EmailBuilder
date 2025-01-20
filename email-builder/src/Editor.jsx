@@ -23,10 +23,10 @@ const Editor = ({ emailLayout, onFieldChange, onImageUpload }) => {
     console.log(event.target.files)
     const formData = new FormData();
     formData.append("image", event.target.files[0]);
-    axios.post("http://localhost:5000/api/upload/uploadImage", formData)
+    axios.post("https://emailbuilder.onrender.com/api/upload/uploadImage", formData)
       .then((response) => {
-        setImageUrl("http://localhost:5000" + response.data.filePath);
-        currentElem.src = "http://localhost:5000" + response.data.filePath;
+        setImageUrl("https://emailbuilder.onrender.com" + response.data.filePath);
+        currentElem.src = "https://emailbuilder.onrender.com" + response.data.filePath;
       })
       .catch((error) => console.log(error));
     setImageUpload(false);
@@ -54,7 +54,6 @@ const Editor = ({ emailLayout, onFieldChange, onImageUpload }) => {
       setSetselectedText(currentElem.innerText);
       console.log(currentElem.innerText)
       const styles = window.getComputedStyle(currentElem);
-      // console.log(styles);
     }
   }, [currentElem]);
 
@@ -67,9 +66,8 @@ const Editor = ({ emailLayout, onFieldChange, onImageUpload }) => {
   const handleStyleChange = (style, value) => {
     if (currentElem) {
       const currentStyle = window.getComputedStyle(currentElem)[style];
-      // Toggle the style
       if (currentStyle === value) {
-        currentElem.style[style] = ''; // Remove the style if it's already applied
+        currentElem.style[style] = '';
       }
       else if (currentElem.style.fontWeight != "normal" && style == "fontWeight") {
         currentElem.style.fontWeight = "normal";
@@ -78,7 +76,7 @@ const Editor = ({ emailLayout, onFieldChange, onImageUpload }) => {
         currentElem.style[style] = "none";
       }
       else {
-        currentElem.style[style] = value; // Apply the new style
+        currentElem.style[style] = value;
       }
     }
   };
@@ -93,10 +91,10 @@ const Editor = ({ emailLayout, onFieldChange, onImageUpload }) => {
   }
 
   function removeContentEditable(element) {
-    // Remove the contentEditable attribute from the current element
+
     element.removeAttribute('contenteditable');
 
-    // Recursively call the function for all child elements
+
     Array.from(element.children).forEach(child => {
       removeContentEditable(child);
     });
@@ -121,15 +119,11 @@ const Editor = ({ emailLayout, onFieldChange, onImageUpload }) => {
         </html>
       `;
 
-    // Create a Blob object with the new HTML content
     const blob = new Blob([newHtml], { type: 'text/html' });
 
-    // Create a link element to trigger the download
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'saved-content.html';  // Set the name of the downloaded file
-
-    // Trigger the download by simulating a click on the link
+    link.download = 'saved-content.html';
     link.click();
   }
 
